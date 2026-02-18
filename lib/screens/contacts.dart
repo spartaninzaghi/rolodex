@@ -112,3 +112,19 @@ class ContactListSection extends StatelessWidget {
     );
   }
 }
+
+/// A detail view component for showing contacts in a specific list.
+class ContactListDetail extends StatelessWidget {
+  const ContactListDetail({super.key, required this.listId});
+
+  final int listId;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ContactListView(
+      listId: listId,
+      automaticallyImplyLeading: false,
+    );
+  }
+}
+

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rolodex/data/contact.dart';
 import 'package:rolodex/data/contact_group.dart';
 import 'package:rolodex/main.dart';
+import 'package:rolodex/screens/contacts.dart';
 
 class ContactGroupsPage extends StatelessWidget {
   const ContactGroupsPage({super.key});
@@ -9,14 +10,16 @@ class ContactGroupsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _ContactGroupsView(
-      selectedListId: 0,
-      onListSelected: (list) {
-        // TODO: Implement navigation lesson.
-        debugPrint(list.toString());
-      },
+      onListSelected: (list) => Navigator.of(context).push(
+        CupertinoPageRoute(
+          title: list.title,
+          builder: (context) => ContactListsPage(listId: list.id),
+        ),
+      ),
     );
   }
 }
+
 
 class _ContactGroupsView extends StatelessWidget {
   const _ContactGroupsView({
@@ -94,4 +97,24 @@ class _ContactGroupsView extends StatelessWidget {
     );
   }
 
+}
+
+/// A sidebar component for selecting contact groups, designed for large screens.
+class ContactGroupsSidebar extends StatelessWidget {
+  const ContactGroupsSidebar({
+    super.key,
+    required this.selectedListId,
+    required this.onListSelected,
+  });
+
+  final int selectedListId;
+  final Function(int) onListSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ContactGroupsView(
+      selectedListId: selectedListId,
+      onListSelected: (list) => onListSelected(list.id),
+    );
+  }
 }
